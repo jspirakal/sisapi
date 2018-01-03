@@ -1,0 +1,25 @@
+upload data:
+jacket color, size, about, pic, serial, price,
+gloves color,size,about,price,pic
+soockes color,size,about,price,pic
+belt color,size,about,price,pic
+
+price dollar or ruppee?
+quantity ?
+
+categories:
+jacket into ladies & gents,gloves,sockes,belt, bag into ladies,gents,
+pents into ladies & gents,undergarments, vaulets
+
+order senario:
+
+within and outside country,
+select product multiple products
+quantities each product
+address
+contact ->num,gmail
+name
+duetime
+total price
+paymethod: ->online
+#deliverymethod: ->
