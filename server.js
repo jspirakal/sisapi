@@ -9,7 +9,7 @@ const port = 6200;
 // create app
 let app = express();
 //defining static sources
-app.use(express.static('./public'));
+app.use(express.static(__dirname + '/public'));
 
 // parsing request body
 app.use(bodyparser());
