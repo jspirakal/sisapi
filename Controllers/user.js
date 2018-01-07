@@ -31,7 +31,7 @@ module.exports={
                     {
                         if(data)
                         {
-                            if(data[0].tag=='super')
+                            if(data.tag=='super')
                             {
                                 // let line=new Line({
                                     // 'userid':data[0]._id,
@@ -40,14 +40,14 @@ module.exports={
                                     // if(err){
                                         // throw err;
                                     // }  else {
-                                        res.cookie('username',data[0].username);                                    
+                                        res.cookie('username',data.username);                                    
                                         // res.cookie('imagepath',data[0].imagepath);                                    
                                         res.send("super");
                                     // }
 
                                 // })
                             }
-                            else if(data[0].tag=='sub')
+                            else if(data.tag=='sub')
                             {
                                 // let line=new Line({
                                     // 'userid':data[0]._id,
@@ -56,7 +56,7 @@ module.exports={
                                     // if(err){
                                         // throw err;
                                     // }  else {
-                                        res.cookie('username',data[0].username);                                    
+                                        res.cookie('username',data.username);                                    
                                         // res.cookie('imagepath',data[0].imagepath);                                    
                                         res.send("sub");
                                     // }
@@ -69,7 +69,7 @@ module.exports={
                                 // });
                                 // line.save(function(err,info){
                                     // if(!err){
-                                        res.cookie('username',data[0].username);                                    
+                                        res.cookie('username',data.username);                                    
                                         // res.cookie('imagepath',data[0].imagepath);      
                                         res.json("user");
                                     // }                    
@@ -96,7 +96,7 @@ module.exports={
             }
             else if(data) {
                 // p.status=1;
-                User.findOne({email:data[0].email}, (err,data) =>{
+                User.findOne({email:data.email}, (err,data) =>{
                     if(err)
                     {
                         res.sendStatus(500);
@@ -105,7 +105,7 @@ module.exports={
                     {
                         if(data)
                         {
-                            User.update({'email':data[0].email},{'status':1},(err,data)=> {
+                            User.update({'email':data.email},{'status':1},(err,data)=> {
                                 if (err) {
                                     res.sendStatus(500);
                                 }
@@ -217,58 +217,51 @@ module.exports={
         }
     },
     reset_Password:function(req,res){
-
-        Reset.find({email:req.body.email}, (err,data) => {
-        if(err)
-        {
-            res.json({"err":err});
-        }
-        else if(data.length==1){
-            // p.status=1;
-            User.update({'email':data[0].email},{'password':Hash.hash(req.body.newpassword)}, (err,data) =>{
-                if(err)
-                {
-                    res.json({"err":err});
-                }
-                else
-                {
-                    Reset.remove({'email':req.body.email},(err,data)=> {
-                        if (err) {
-                            res.json({"err":err});
-                        }
-                        else {
-                            res.json({"success":"Your Password  Reset Succesfully.Now Login With That! <strong>you will redirect to Login Panel in 3 seconds!</strong>"});
-                        }
-                    });
-                }
-            });
-        }
-        else if(data.length==0)
-        {
-            res.json({"invalid":"invalid Hash"});
-        }
+        Reset.findOne({email:req.body.email}, (err,data) => {
+            if(err)
+            {
+                res.sendStatus(500);
+            }
+            else if(data){
+                // p.status=1;
+                User.update({'email':data.email},{'password':Hash.hash(req.body.newpassword)}, (err,data) =>{
+                    if(err)
+                    {
+                        res.sendStatus(500);
+                    }
+                    else
+                    {
+                        Reset.remove({'email':req.body.email},(err,data)=> {
+                            if (err) {
+                                res.sendStatus(500);
+                            }
+                            else {
+                                res.json({"success":"Your Password  Reset Succesfully.Now Login With That! <strong>you will redirect to Login Panel in 3 seconds!</strong>"});
+                            }
+                        });
+                    }
+                });
+            }
+            else
+            {
+                res.json({"invalid":"invalid Hash"});
+            }
         });
     },
     changePassword:function(req,res){
-        sess=req.session;
-        if(sess.userid){
             req.body.confirm=Hash.hash(req.body.confirm);
             req.body.old=Hash.hash(req.body.old);
             console.log(req.body);
             User.update({'_id':sess.userid,'password':req.body.old},{'password':req.body.confirm},function(err,data){
                 if(err)
                 {
-                    res.json({"err":err});
+                    res.sendStatus(500);
                 }
                 else
                 {
                     res.json(data);
                 }
             });
-        }
-        else {
-            res.json({'login':'expired!'});
-        }
     },
     resetPasswordRequest:function(req,res){
         // res.send(req.body);
@@ -276,7 +269,7 @@ module.exports={
             if(err) {
                 res.sendStatus(500);
             }
-            else if(res)
+            else if(data)
                 {
                 Reset.findOne(req.body, (err,data) => {
                     if(err)
@@ -284,12 +277,10 @@ module.exports={
                         res.sendStatus(500);
                     }
                     else if(data){
-                        // console.log(req.body);
                                 EMail.sendJRMail('resetpassword',req.body.email,Hash.hash(req.body.email));
                                 res.json({"success":"Password reset link sent to your Email, Reset password from there! If not get link from inbox or spam than try again it!"});
                     }
-                    else {
-                        console.log(req.body);                
+                    else {             
                         let reset=new Reset({
                             'email':req.body.email,
                             'hash':Hash.hash(req.body.email)
@@ -297,7 +288,7 @@ module.exports={
                         reset.save(function(err,data){
                             if(err)
                             {
-                                res.json({"err":err});
+                                res.sendStatus(500);
                             }
                             else
                             {
@@ -316,22 +307,22 @@ module.exports={
         
     },
     verifyReset:function(req,res){
-        Reset.find(req.body, (err,data) => {
+        Reset.findOne(req.body, (err,data) => {
             if(err)
             {
-                res.json({"err":err});
+                res.sendStatus(500);
             }
-            else if(data.length==1){
-                User.find({email:data[0].email}, (err,data) =>{
+            else if(data){
+                User.findOne({email:data.email}, (err,data) =>{
                     if(err)
                     {
-                        res.json({"err":err});
+                        res.json(500);
                     }
                     else
                     {
-                        if(data.length==1)
+                        if(data)
                         {
-                            res.json({"email":data[0].email});
+                            res.json({"email":data.email});
                         }
                         else {
                             res.json({"invalid":"invalid Hash"});
@@ -339,7 +330,7 @@ module.exports={
                     }
                 });
             }
-            else if(data.length==0)
+            else
             {
                 res.json({"invalid":"invalid Hash"});
             }
