@@ -1,14 +1,23 @@
 const express = require('express');
 const secret = require('../config/secrets');
 const jwt = require('jsonwebtoken');
-let Route=express.Router();
-Route.get('/',(req,res) => {
+const User = require('../Controllers/user');
+let router=express.Router();
+router.get('/',(req,res) => {
     res.send('api working');
 });
-Route.get('/authenticate',checkToken,(req,res) => {
-    res.json('authenticate');
-});
-Route.post('/user',(req,res) => {
+// User routing
+router.post('/login',User.login);
+router.post('/register',User.register);
+router.post('/verifyhash',User.verifyHash);
+router.post('/reset_password',User.reset_Password);
+router.post('/verifyreset',User.verifyReset);
+router.post('/resetpasswordrequest',User.resetPasswordRequest);
+router.put('/changepassword',User.changePassword);
+router.get('/logout',checkToken,User.logout);
+router.get('/getuser/:id',User.getUser);
+router.post('/login',checkToken,User.login);
+router.post('/user',(req,res) => {
     let user=req.body;
     let token = jwt.sign({user},secret.jwtSecret);
     res.json(token);
@@ -29,4 +38,4 @@ function checkToken(req,res,next) {
         });
     }
 }
-module.exports = Route;
+module.exports = router;
