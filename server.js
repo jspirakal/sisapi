@@ -13,7 +13,7 @@ let app = express();
 //defining static sources
 app.use(express.static(__dirname + '/public'));
 // mongodb conectivity
-mongoose.connect('mongodb://localhost/eadroo',{useMongoClient:true});  //for local machine without password
+mongoose.connect('mongodb://localhost/eadroo');  //for local machine without password
 
 // parsing request body
 app.use(bodyparser.json());

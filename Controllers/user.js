@@ -155,7 +155,8 @@ module.exports={
         user.save(function(err,data){
             if(err)
             {
-                res.sendStatus(500);
+                res.status(500)
+                res.send("Email already exist");                
             }
             else
             {
@@ -252,14 +253,14 @@ module.exports={
             req.body.confirm=Hash.hash(req.body.confirm);
             req.body.old=Hash.hash(req.body.old);
             console.log(req.body);
-            User.update({'_id':sess.userid,'password':req.body.old},{'password':req.body.confirm},function(err,data){
+            User.update({'_id':req.params.id,'password':req.body.old},{'password':req.body.confirm},function(err,data){
                 if(err)
                 {
-                    res.sendStatus(500);
+                    res.send(500,{error:'Opps! Password not changed.'});
                 }
                 else
                 {
-                    res.json(data);
+                    res.sendStatus(200);
                 }
             });
     },
@@ -300,7 +301,7 @@ module.exports={
                 });
             }
             else{
-                res.send("invalid");
+                res.send(404,{error:'Please use registered email.'});
             }
 
         });
@@ -325,14 +326,14 @@ module.exports={
                             res.json({"email":data.email});
                         }
                         else {
-                            res.json({"invalid":"invalid Hash"});
+                            res.send(404,{error:"invalid Hash"});
                         }
                     }
                 });
             }
             else
             {
-                res.json({"invalid":"invalid Hash"});
+                res.send(404,{error:"invalid Hash"});
             }
         });
     }

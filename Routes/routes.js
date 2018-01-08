@@ -13,7 +13,7 @@ router.post('/verifyhash',User.verifyHash);
 router.post('/reset_password',User.reset_Password);
 router.post('/verifyreset',User.verifyReset);
 router.post('/resetpasswordrequest',User.resetPasswordRequest);
-router.put('/changepassword',User.changePassword);
+router.put('/changepassword/:id',User.changePassword);
 router.get('/logout',checkToken,User.logout);
 router.get('/getuser/:id',User.getUser);
 router.post('/login',checkToken,User.login);
