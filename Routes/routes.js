@@ -16,6 +16,9 @@ router.post('/verifyreset',User.verifyReset);
 router.post('/resetpasswordrequest',User.resetPasswordRequest);
 router.put('/changepassword/:id',User.changePassword);
 router.get('/logout',checkToken,User.logout);
+router.get('/isauthorize',checkToken,function(){
+    res.sendStatus(200);
+});
 router.get('/getuser/:id',User.getUser);
 router.post('/user',(req,res) => {
     let user=req.body;

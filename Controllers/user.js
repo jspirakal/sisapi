@@ -4,7 +4,11 @@ const    Verification=require('../Models/verifications');
 const    Reset=require('../Models/resets');
 const    Hash=require('../libraries/crypto');
 const    EMail = require('../hooks/email');
-const { validationResult } = require('express-validator/check');
+const    Validator = require('../libraries/validation');
+// const { validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator/check');
+const { matchedData, sanitize } = require('express-validator/filter');
+
 // const { sanitizeBody } = require('express-validator/filter');
 const jwt = require('jsonwebtoken');
 
@@ -21,7 +25,24 @@ module.exports={
         //         // res.render('genre_form', { title: 'Create Genre', genre: genre, errors: errors.array()});
         //     return;
         //     } 
-        //     else {
+            // else {
+                // check('email')
+                // // Every validator method in the validator lib is available as a
+                // // method in the check() APIs.
+                // // You can customize per validator messages with .withMessage()
+                // .isEmail().withMessage('valid email');
+                // const errors = validationResult(req);
+                // console.log(errors.isEmpty);
+                    // if (!errors.isEmpty()) {
+                        // res.send(400,errors.array());
+                        // There are errors. Render the form again with sanitized values/error messages.
+                        // res.render('genre_form', { title: 'Create Genre', genre: genre, errors: errors.array()});
+                    // return;
+                    // } 
+                    // else {    
+                        // return true;
+                    // }
+                    console.log(req.body.email);
         let p =req.body;
         req.body.password=Hash.hash(req.body.password);
         User.findOne(req.body, (err,data) => {

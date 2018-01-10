@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const Route = require('./Routes/routes');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const expressValidator = require('express-validator');
+
 // definging variables
 const port = 6200;
 
@@ -18,6 +20,8 @@ mongoose.connect('mongodb://localhost/eadroo');  //for local machine without pas
 // parsing request body
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:'false'}));
+//validatin midleware
+app.use(expressValidator());
 // log requests
 app.use(morgan('dev'));
 
