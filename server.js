@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost/eadroo');  //for local machine without pas
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:'false'}));
 // log requests
-app.use(morgan());
+app.use(morgan('dev'));
 
 // setting api routes 
 app.use('/',Route);

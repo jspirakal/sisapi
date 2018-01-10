@@ -4,13 +4,24 @@ const    Verification=require('../Models/verifications');
 const    Reset=require('../Models/resets');
 const    Hash=require('../libraries/crypto');
 const    EMail = require('../hooks/email');
-// const    Line=require('../Model/line');
+const { validationResult } = require('express-validator/check');
+// const { sanitizeBody } = require('express-validator/filter');
 const jwt = require('jsonwebtoken');
 
 
 module.exports={
 
-    login:function(req,res){
+    login:function(req,res){    
+            // Extract the validation errors from a request.
+        //     const errors = validationResult(req);
+        // console.log(errors.isEmpty);
+        //     if (!errors.isEmpty()) {
+        //         res.send(400,errors.array());
+        //         // There are errors. Render the form again with sanitized values/error messages.
+        //         // res.render('genre_form', { title: 'Create Genre', genre: genre, errors: errors.array()});
+        //     return;
+        //     } 
+        //     else {
         let p =req.body;
         req.body.password=Hash.hash(req.body.password);
         User.findOne(req.body, (err,data) => {
@@ -86,7 +97,9 @@ module.exports={
             else {
                 res.send("incorrect");
             }
-        });
+             });
+        // }
+    // }
     },
     verifyHash:function(req,res){
         Verification.findOne(req.body, (err,data) => {

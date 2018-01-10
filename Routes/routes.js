@@ -1,13 +1,14 @@
 const express = require('express');
 const secret = require('../config/secrets');
 const jwt = require('jsonwebtoken');
+const Validaion = require('../libraries/validation');
 const User = require('../Controllers/user');
 let router=express.Router();
 router.get('/',(req,res) => {
     res.send('api working');
 });
 // User routing
-router.post('/login',User.login);
+router.post('/login',Validaion.checkLogin,User.login);
 router.post('/register',User.register);
 router.post('/verifyhash',User.verifyHash);
 router.post('/reset_password',User.reset_Password);
@@ -16,7 +17,6 @@ router.post('/resetpasswordrequest',User.resetPasswordRequest);
 router.put('/changepassword/:id',User.changePassword);
 router.get('/logout',checkToken,User.logout);
 router.get('/getuser/:id',User.getUser);
-router.post('/login',checkToken,User.login);
 router.post('/user',(req,res) => {
     let user=req.body;
     let token = jwt.sign({user},secret.jwtSecret);
