@@ -12,6 +12,10 @@ var ResetSchema=mongoose.Schema({
         type:String,
         required:true,
     },
+    status:{
+        type:Number,
+        required:0,
+    },
     date:{
        type: Date,
        default:Date.now

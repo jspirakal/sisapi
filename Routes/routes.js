@@ -3,6 +3,7 @@ const secret = require('../config/secrets');
 const jwt = require('jsonwebtoken');
 const Validaion = require('../libraries/validation');
 const User = require('../Controllers/user');
+const Application = require('../Controllers/application');
 let router=express.Router();
 router.get('/',(req,res) => {
     res.send('api working');
@@ -19,6 +20,7 @@ router.get('/logout',checkToken,User.logout);
 router.get('/isauthorize',checkToken,function(){
     res.sendStatus(200);
 });
+router.post('/sensapplication',Application.sendApplication);
 router.get('/getuser/:id',User.getUser);
 router.post('/user',(req,res) => {
     let user=req.body;
