@@ -4,13 +4,21 @@ var ApplicationSchema=mongoose.Schema({
        type:String,
        required:true,
    },
-   userid:{
-    type:String,
-    required:true,
-    },
     smester:{
         type:String,
         required:true,
+        },
+        degree:{
+            type:String,
+            required:true
+           },
+           programe:{
+            type:String,
+            required:true
+           },
+           rollno:{
+            type:String,
+            required:true
         },
     body:{
         type:String,

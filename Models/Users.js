@@ -49,10 +49,6 @@ var schema=mongoose.Schema({
     type:String,
     required:true
    },
-   status:{
-       type:Number,
-       default:0
-   },
    createdAt:{
        type: Date,
        default:new Date()

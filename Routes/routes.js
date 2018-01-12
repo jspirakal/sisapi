@@ -9,7 +9,7 @@ router.get('/',(req,res) => {
     res.send('api working');
 });
 // User routing
-router.post('/login',Validaion.checkLogin,User.login);
+router.post('/login',User.login);
 router.post('/register',User.register);
 router.post('/verifyhash',User.verifyHash);
 router.post('/reset_password',User.reset_Password);
@@ -22,7 +22,12 @@ router.get('/isauthorize',checkToken,function(){
 });
 router.post('/sendapplication',Application.sendApplication);
 router.get('/getapplications/:id',Application.getApplications);
+router.get('/getallapplications',Application.getAllApplications);
+
 router.get('/getuser/:id',User.getUser);
+router.get('/getalluser',User.getAllUser);
+
+router.put('/updateuser/:id',User.updateUser);
 router.post('/user',(req,res) => {
     let user=req.body;
     let token = jwt.sign({user},secret.jwtSecret);

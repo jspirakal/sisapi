@@ -21,73 +21,21 @@ module.exports={
         User.findOne(req.body, (err,data) => {
             if(err)
             {
-                res.sendStatus(500);
+                res.status(500).send(err);
             }
             else if(data){
-                p.status=1;
-                User.findOne(p, (err,data) =>{
-                    if(err)
-                    {
-                        res.sendStatus(500);
-                    }
-                    else
-                    {
-                        if(data)
-                        {
-                            if(data.tag=='super')
-                            {
-                                // let line=new Line({
-                                    // 'userid':data[0]._id,
-                                // });
-                                // line.save(function(err,info){
-                                    // if(err){
-                                        // throw err;
-                                    // }  else {
-                                        res.cookie('username',data.username);                                    
-                                        // res.cookie('imagepath',data[0].imagepath);                                    
-                                        res.send("super");
-                                    // }
-
-                                // })
-                            }
-                            else if(data.tag=='sub')
-                            {
-                                // let line=new Line({
-                                    // 'userid':data[0]._id,
-                                // });
-                                // line.save(function(err,info){
-                                    // if(err){
-                                        // throw err;
-                                    // }  else {
-                                        res.cookie('username',data.username);                                    
-                                        // res.cookie('imagepath',data[0].imagepath);                                    
-                                        res.send("sub");
-                                    // }
-
-                                // })
-                            }
-                            else {
-                                // let line=new Line({
-                                    // 'userid':data[0]._id,
-                                // });
-                                // line.save(function(err,info){
-                                    // if(!err){
-                                        res.cookie('username',data.username);                                    
-                                        // res.cookie('imagepath',data[0].imagepath);      
-                                        res.json("user");
-                                    // }                    
-                                // });
-                            }
-
-                        }
-                        else {
-                            res.send("notverify");
-                        }
-                    }
-                });
+                if(data.tag=='admin')
+                {
+                    res.cookie('username',data.username);                                    
+                    res.json({"user":"admin"});
+                }
+                else {
+                    res.json({"user":"student","rollno":data.rollno});
+                }
+                    
             }
             else {
-                res.send("incorrect");
+                res.status(500).send('incorrect username or password!');
             }
              });
         // }
@@ -169,42 +117,40 @@ module.exports={
 
         });
     },
+    updateUser:function(req,res){
+        User.update({_id:req.params.id},req.body,function(err,data){
+            if(err)
+            {
+                res.status(500).send(err);
+            }
+            else
+            {
+                res.status(200).send('ok');
+            }
 
+        });
+    },
     getUser:function(req,res){
-            User.findOne({_id:req.params.id},function(err,data){
+            User.find({"rollno":req.params.id},function(err,data){
                 if(err)
                 {
-                    res.sendStatus(500);
+                    res.status(500).json(data);
                 }
                 else {
-                    res.json(data);
+                    res.status(200).json(data);
                 }
             });
     },
-
-    updateUser:function(req,res){
-        //Model.updata({conditions},{update value},callbackfunction(err,data))
-        //Model.Update update first found result n="number of found",
-        //nmodified="number modified" "ok" ="1" mean query executed
-        sess=req.session;
-        if(sess.userid){
-            User.update({'_id':req.body._id},req.body,function(err,data){
-                    if(err)
-                    {
-                        res.json({'err':err});
-                    }
-                    else
-                    {
-                        // data bject contain 'n' represent number of removed data and 'ok' if
-                        // ok =1 than query executed
-                        //if n=0 than given data not removed
-                        res.json(data);
-                    }
-            });
-        }
-        else {
-            res.json({'login':'do'});
-        }
+    getAllUser:function(req,res){
+        User.find({},function(err,data){
+            if(err)
+            {
+                res.status(500).json(data);
+            }
+            else {
+                res.status(200).json(data);
+            }
+        });
     },
     reset_Password:function(req,res){
         Reset.findOne({email:req.body.email}, (err,data) => {
