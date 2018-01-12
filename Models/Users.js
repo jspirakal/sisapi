@@ -58,4 +58,4 @@ var schema=mongoose.Schema({
        default:new Date()
        }
 });
-var users=module.exports=mongoose.model('user',schema);
+module.exports=mongoose.model('uses',schema);
