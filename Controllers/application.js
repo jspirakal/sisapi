@@ -5,7 +5,7 @@ module.exports={
         let app=new Application(req.body);
         app.save((err,info)=>{
             if(err){
-                res.send(500,'error');
+                res.send(500,err);
             } else {
                 res.send(200,info);
             }

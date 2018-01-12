@@ -16,38 +16,9 @@ const jwt = require('jsonwebtoken');
 module.exports={
 
     login:function(req,res){    
-            // Extract the validation errors from a request.
-        //     const errors = validationResult(req);
-        // console.log(errors.isEmpty);
-        //     if (!errors.isEmpty()) {
-        //         res.send(400,errors.array());
-        //         // There are errors. Render the form again with sanitized values/error messages.
-        //         // res.render('genre_form', { title: 'Create Genre', genre: genre, errors: errors.array()});
-        //     return;
-        //     } 
-            // else {
-                // check('email')
-                // // Every validator method in the validator lib is available as a
-                // // method in the check() APIs.
-                // // You can customize per validator messages with .withMessage()
-                // .isEmail().withMessage('valid email');
-                // const errors = validationResult(req);
-                // console.log(errors.isEmpty);
-                    // if (!errors.isEmpty()) {
-                        // res.send(400,errors.array());
-                        // There are errors. Render the form again with sanitized values/error messages.
-                        // res.render('genre_form', { title: 'Create Genre', genre: genre, errors: errors.array()});
-                    // return;
-                    // } 
-                    // else {    
-                        // return true;
-                    // }
-                    console.log(req.body.email);
         let p =req.body;
         req.body.password=Hash.hash(req.body.password);
         User.findOne(req.body, (err,data) => {
-        //if    data.length =>1 then record found
-        //if    data.length =0 then record not found found
             if(err)
             {
                 res.sendStatus(500);
@@ -189,27 +160,11 @@ module.exports={
         user.save(function(err,data){
             if(err)
             {
-                res.status(500)
-                res.send("Email already exist");                
+                res.status(500).send(err);
             }
             else
             {
-                let verification=new Verification({
-                    'userid':data._id,
-                    'email':data.email,
-                    'hash':Hash.hash(data.email)
-                });
-                verification.save(function(err,data){
-                    if(err)
-                    {
-                        res.sendStatus(500);
-                    }
-                    else
-                    {
-                        EMail.sendJRMail('verify',data.email,Hash.hash(data.email));
-                        res.sendStatus(200);
-                    }
-                });
+                res.status(200).send('ok');
             }
 
         });

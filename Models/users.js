@@ -1,14 +1,30 @@
 var mongoose=require('mongoose');
 var userschema=mongoose.Schema({
-    username:{
+    name:{
+        type:String,
+        required:true
+    },
+    fathername:{
        type:String,
        required:true
-   },
-   email:{
+    },
+    registrationno:{
+        type:String,
+        required:true
+    },
+    rollno:{
        type:String,
        unique:true,
        required:true
    },
+   gender:{
+       type:String,
+       required:true,
+   },
+//    email:{
+//        type:String,
+//        required:true,
+//    },
    password:{
        type:String,
        required:true
@@ -23,7 +39,15 @@ var userschema=mongoose.Schema({
     },
    tag:{
        type:String,
-       default:'user'
+       default:'student'
+   },
+   degree:{
+    type:String,
+    required:true
+   },
+   programe:{
+    type:String,
+    required:true
    },
    status:{
        type:Number,

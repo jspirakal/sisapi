@@ -1,5 +1,5 @@
 var mongoose=require('mongoose');
-var ResetSchema=mongoose.Schema({
+var ApplicationSchema=mongoose.Schema({
    title:{
        type:String,
        required:true,
@@ -8,17 +8,21 @@ var ResetSchema=mongoose.Schema({
     type:String,
     required:true,
     },
+    smester:{
+        type:String,
+        required:true,
+        },
     body:{
         type:String,
         required:true,
     },
     status:{
         type:Number,
-        required:0,
+        default:0,
     },
     date:{
        type: Date,
        default:Date.now
     }
 });
-module.exports=mongoose.model('reset',ResetSchema);
+module.exports=mongoose.model('application',ApplicationSchema);

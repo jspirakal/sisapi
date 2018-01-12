@@ -20,7 +20,8 @@ router.get('/logout',checkToken,User.logout);
 router.get('/isauthorize',checkToken,function(){
     res.sendStatus(200);
 });
-router.post('/sensapplication',Application.sendApplication);
+router.post('/sendapplication',Application.sendApplication);
+router.get('/getapplications/:id',Application.getApplications);
 router.get('/getuser/:id',User.getUser);
 router.post('/user',(req,res) => {
     let user=req.body;
