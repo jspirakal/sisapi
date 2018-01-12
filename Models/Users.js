@@ -1,5 +1,5 @@
 var mongoose=require('mongoose');
-var userschema=mongoose.Schema({
+var schema=mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -21,10 +21,10 @@ var userschema=mongoose.Schema({
        type:String,
        required:true,
    },
-//    email:{
-//        type:String,
-//        required:true,
-//    },
+   email:{
+       type:String,
+       required:true,
+   },
    password:{
        type:String,
        required:true
@@ -58,4 +58,4 @@ var userschema=mongoose.Schema({
        default:new Date()
        }
 });
-var users=module.exports=mongoose.model('user',userschema);
+var users=module.exports=mongoose.model('user',schema);

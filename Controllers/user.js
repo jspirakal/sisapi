@@ -1,5 +1,5 @@
 'use strict';
-const    User=require('../Models/users');
+const    User=require('../Models/Users');
 const    Verification=require('../Models/verifications');
 const    Reset=require('../Models/resets');
 const    Hash=require('../libraries/crypto');
