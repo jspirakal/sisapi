@@ -5,22 +5,26 @@ var ApplicationSchema=mongoose.Schema({
        required:true,
    },
     smester:{
+      type:String,
+      required:true,
+    },
+    degree:{
+      type:String,
+      required:true
+    },
+    programe:{
+      type:String,
+      required:true
+    },
+    rollno:{
+      type:String,
+      required:true
+    },
+    body:{
         type:String,
         required:true,
-        },
-        degree:{
-            type:String,
-            required:true
-           },
-           programe:{
-            type:String,
-            required:true
-           },
-           rollno:{
-            type:String,
-            required:true
-        },
-    body:{
+    },
+    type:{
         type:String,
         required:true,
     },

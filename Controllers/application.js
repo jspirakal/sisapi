@@ -44,16 +44,26 @@ module.exports={
         let app=new Replies(req.body);
         app.save(function(err,info){
             if(err){
-                res.status(500).json('err');
+                res.sendStatus(500);
             } else {
-                Application.updateById(req.body.id,function(err,info){
+                console.log(req.body);
+                Application.update({'_id':req.body.appid},{'status':1},function(err,info){
                     if(err){
-                    res.status(500).json('error');
+                    res.sendStatus(500);
                     } else {
-                        res.status(200).json(data);
+                        res.sendStatus(200);
                     }
                 })
             }
         });
-    }
+    },
+    getReply:function(req,res){
+        Replies.findOne({'appid':req.params.id},(err,data)=>{
+            if(err){
+                res.status(500).json('error');
+            } else {
+                res.status(200).json(data);
+            }
+        });
+    },
 }
