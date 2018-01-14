@@ -5,7 +5,7 @@ const Route = require('./Routes/routes');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const expressValidator = require('express-validator');
-
+const cors	= require('cors');
 // definging variables
 const port = 6200;
 
@@ -16,7 +16,8 @@ let app = express();
 app.use(express.static(__dirname + '/public'));
 // mongodb conectivity
 mongoose.connect('mongodb://localhost/sis');  //for local machine without password
-
+//cors
+app.use(cors());
 // parsing request body
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:'false'}));

@@ -1,5 +1,6 @@
 const Application= require('../Models/application');
 const User= require('../Models/Users');
+const Replies= require('../Models/Replies');
 
 module.exports={
     sendApplication:function(req,res){
@@ -24,7 +25,7 @@ module.exports={
     getApplications:function(req,res){
         Application.find({'rollno':req.params.id},(err,data)=>{
             if(err){
-                res.status(500).json(err);
+                res.status(500).json('error');
             } else {
                 res.status(200).json(data);
             }
@@ -32,10 +33,26 @@ module.exports={
     },
     getAllApplications:function(req,res){
         Application.find({},(err,data)=>{
-            if(err){
-                res.send(500,'error');
+           if(err){
+                res.status(500).json('error');
             } else {
-                res.send(200,data);
+                res.status(200).json(data);
+            }
+        });
+    },
+    replyApplication:function(req,res){
+        let app=new Replies(req.body);
+        app.save(function(err,info){
+            if(err){
+                res.status(500).json('err');
+            } else {
+                Application.updateById(req.body.id,function(err,info){
+                    if(err){
+                    res.status(500).json('error');
+                    } else {
+                        res.status(200).json(data);
+                    }
+                })
             }
         });
     }

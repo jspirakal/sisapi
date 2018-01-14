@@ -21,13 +21,13 @@ module.exports={
         User.findOne(req.body, (err,data) => {
             if(err)
             {
-                res.status(500).send(err);
+                res.status(500).json("try agin");
             }
             else if(data){
                 if(data.tag=='admin')
                 {
                     res.cookie('username',data.username);                                    
-                    res.json({"user":"admin"});
+                    res.json({"user":"admin","rollno":data.rollno});
                 }
                 else {
                     res.json({"user":"student","rollno":data.rollno});
@@ -35,7 +35,7 @@ module.exports={
                     
             }
             else {
-                res.status(500).send('incorrect username or password!');
+                res.status(500).json('incorrect username or password!');
             }
              });
         // }
@@ -131,7 +131,7 @@ module.exports={
         });
     },
     getUser:function(req,res){
-            User.find({"rollno":req.params.id},function(err,data){
+            User.findOne({"rollno":req.params.id},function(err,data){
                 if(err)
                 {
                     res.status(500).json(data);

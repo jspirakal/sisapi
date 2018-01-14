@@ -22,6 +22,7 @@ router.get('/isauthorize',checkToken,function(){
 });
 router.post('/sendapplication',Application.sendApplication);
 router.get('/getapplications/:id',Application.getApplications);
+router.post('/replyapplication',Application.replyApplication);
 router.get('/getallapplications',Application.getAllApplications);
 
 router.get('/getuser/:id',User.getUser);
