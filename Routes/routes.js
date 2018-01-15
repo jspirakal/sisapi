@@ -4,10 +4,16 @@ const jwt = require('jsonwebtoken');
 const Validaion = require('../libraries/validation');
 const User = require('../Controllers/user');
 const Application = require('../Controllers/application');
+const News = require('../Controllers/news');
+
 let router=express.Router();
 router.get('/',(req,res) => {
     res.send('api working');
 });
+//news 
+router.get('/getnews',News.getNews);
+router.post('/sendNews',News.sendNews);
+
 // User routing
 router.post('/login',User.login);
 router.post('/register',User.register);
