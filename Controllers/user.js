@@ -5,6 +5,7 @@ const    Reset=require('../Models/resets');
 const    Hash=require('../libraries/crypto');
 const    EMail = require('../hooks/email');
 const    Validator = require('../libraries/validation');
+const    Secret = require('../config/secrets');
 // const { validationResult } = require('express-validator/check');
 const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
@@ -12,11 +13,11 @@ const { matchedData, sanitize } = require('express-validator/filter');
 // const { sanitizeBody } = require('express-validator/filter');
 const jwt = require('jsonwebtoken');
 
-
 module.exports={
 
     login:function(req,res){    
         let p =req.body;
+        console.log(p);
         req.body.password=Hash.hash(req.body.password);
         User.findOne(req.body, (err,data) => {
             if(err)
@@ -27,10 +28,10 @@ module.exports={
                 if(data.tag=='admin')
                 {
                     res.cookie('username',data.username);                                    
-                    res.json({"user":"admin","rollno":data.rollno});
+                    res.json({"user":"admin","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
                 }
                 else {
-                    res.json({"user":"student","rollno":data.rollno});
+                    res.json({"user":"student","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
                 }
                     
             }
@@ -131,6 +132,8 @@ module.exports={
         });
     },
     getUser:function(req,res){
+        console.log(req.headers);
+        
             User.findOne({"rollno":req.params.id},function(err,data){
                 if(err)
                 {

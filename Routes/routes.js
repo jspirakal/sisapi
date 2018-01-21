@@ -5,7 +5,7 @@ const Validaion = require('../libraries/validation');
 const User = require('../Controllers/user');
 const Application = require('../Controllers/application');
 const News = require('../Controllers/news');
-
+const TimeTable = require('../Controllers/timetable');
 let router=express.Router();
 router.get('/',(req,res) => {
     res.send('api working');
@@ -26,13 +26,15 @@ router.get('/logout',checkToken,User.logout);
 router.get('/isauthorize',checkToken,function(){
     res.sendStatus(200);
 });
+router.post('/sendtimetable',TimeTable.sendTimeTable);
+
 router.post('/sendapplication',Application.sendApplication);
 router.get('/getapplications/:id',Application.getApplications);
 router.post('/replyapplication',Application.replyApplication);
 router.get('/getallapplications',Application.getAllApplications);
 router.get('/getreply/:id',Application.getReply);
 
-router.get('/getuser/:id',User.getUser);
+router.get('/getuser/:id',checkToken,User.getUser);
 router.get('/getalluser',User.getAllUser);
 
 router.put('/updateuser/:id',User.updateUser);
@@ -43,14 +45,16 @@ router.post('/user',(req,res) => {
 });
 function checkToken(req,res,next) {
     const bearerHeader= req.headers['authorization'];
+        console.log(bearerHeader);
     if(bearerHeader===undefined) {
-        res.sendStatus(403);
+        res.status(403).json('forbidden');
     } else {
         let bearer = bearerHeader.split(" ");
         let token = bearer[1];
+        console.log(bearerHeader);
         jwt.verify(token,secret.jwtSecret,(err,data)=>{
             if(err){
-                res.sendStatus(403);
+            res.status(403).json('forbidden');        
             } else {
                 return next();
             }
