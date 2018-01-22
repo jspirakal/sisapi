@@ -37,7 +37,7 @@ module.exports={
                 let pac={
                     'department':req.body.department,
                     'smester':req.body.smester,
-                    'path':req.file.path
+                    'path':req.file.path.replace('public/u','u')
                 };
                 let app=new TimeTable(pac);                
                 app.save((err,info)=>{
@@ -51,7 +51,7 @@ module.exports={
         })
     },
     getTimeTable:function(req,res){
-        News.find({},(err,data)=>{
+        TimeTable.find({},(err,data)=>{
             if(err){
                 res.sendStatus(500);
             } else {

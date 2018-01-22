@@ -27,6 +27,7 @@ router.get('/isauthorize',checkToken,function(){
     res.sendStatus(200);
 });
 router.post('/sendtimetable',TimeTable.sendTimeTable);
+router.get('/getalltt',TimeTable.getTimeTable);
 
 router.post('/sendapplication',Application.sendApplication);
 router.get('/getapplications/:id',Application.getApplications);

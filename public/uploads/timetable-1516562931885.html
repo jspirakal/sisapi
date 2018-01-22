@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="./css/bootstrap.css">
+        <link rel="stylesheet" href="./fonts/font-awesome.min.css">
+        <script type="text/javascript"
+        src="jquery.js"></script>
+        <style media="screen">
+            span{
+                font-size: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="well text-center text-primary text-bold" style="margin-top:20px">
+                <h3>
+                    Muhammad Sarmad's CV
+                </h3>
+            </div>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-12">
+                    <h3 class="text-primary">Profile</h3>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                <span>First Name </span>:
+                            </div></div>
+                            <div class="col-md-8">
+                                <span class=""id="fn"> <i class="fa fa-spin fa-spinner"></i> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                <span>Last Name </span>:
+                            </div></div>
+                            <div class="col-md-8">
+                                <span class="" id="ln"><i class="fa fa-spin fa-spinner"></i></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="row">
+                                <span>Address </span>:
+                            </div>                            </div>
+                            <div class="col-md-8">
+                                <span class=""id="ad"><i class="fa fa-spin fa-spinner"></i></span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-12">
+                    <h3 class="text-primary">Education</h3>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                <span>Maticx </span>:
+                            </div></div>
+                            <div class="col-md-8">
+                                <span class=""id="mt"><i class="fa fa-spin fa-spinner"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                <span>Inter </span>:
+                            </div></div>
+                            <div class="col-md-8">
+                                <span class="" id="in"><i class="fa fa-spin fa-spinner"></i></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="row">
+                                <span>Master </span>:
+                            </div>                            </div>
+                            <div class="col-md-8">
+                                <span class=""id="ms"><i class="fa fa-spin fa-spinner"></i></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-md-12">
+                        <h3 class="text-primary">Experiance</h3>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <span>Nexthon </span>:
+                                    </div></div>
+                                    <div class="col-md-8">
+                                        <span class=""id="nx"><i class="fa fa-spin fa-spinner"></i></span>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h3 class="text-primary">Hobbies</h3>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <span>Video Gaming </span>:
+                                    </div></div>
+                                    <div class="col-md-8">
+                                        <span class=""id="vg"><i class="fa fa-spin fa-spinner"></i></span>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    </body>
+    <script type="text/javascript">
+    $.get('http://localhost:4500/profile',function(resObj) {
+        $('#fn').html(resObj.fn);
+        $('#ln').html(resObj.ln);
+        $('#ad').html(resObj.ad);
+    });
+    $.get('http://localhost:3000/education',function(resObj) {
+        $('#in').html(resObj.inter);
+        $('#mt').html(resObj.mt);
+        $('#ms').html(resObj.ms);
+    });
+
+    $.get('http://localhost:3000/exp',function(resObj) {
+        $('#nx').html(resObj.nexthon);
+    });
+
+    $.get('http://localhost:3000/hobies',function(resObj) {
+        $('#vg').html(resObj.fisrt);
+    });
+    </script>
+</html>
