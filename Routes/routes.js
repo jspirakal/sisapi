@@ -35,7 +35,7 @@ router.post('/replyapplication',Application.replyApplication);
 router.get('/getallapplications',Application.getAllApplications);
 router.get('/getreply/:id',Application.getReply);
 
-router.get('/getuser/:id',checkToken,User.getUser);
+router.get('/getuser/:id',User.getUser);
 router.get('/getalluser',User.getAllUser);
 
 router.put('/updateuser/:id',User.updateUser);

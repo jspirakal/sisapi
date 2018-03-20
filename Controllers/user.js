@@ -109,7 +109,7 @@ module.exports={
         user.save(function(err,data){
             if(err)
             {
-                res.status(500).send(err);
+                res.status(500).send('Student Already Registered with that Roll No!');
             }
             else
             {
