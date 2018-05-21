@@ -1,9 +1,9 @@
 var mongoose=require('mongoose');
 var ApplicationSchema=mongoose.Schema({
-   title:{
-       type:String,
-       required:true,
-   },
+    title:{
+        type:String,
+        required:true,
+    },
     smester:{
       type:String,
       required:true,
@@ -30,6 +30,18 @@ var ApplicationSchema=mongoose.Schema({
     },
     status:{
         type:Number,
+        default:0,
+    },
+    admin:{
+        type:Boolean,
+        default:0,
+    },
+    controller:{
+        type:Boolean,
+        default:0,
+    },
+    hod:{
+        type:Boolean,
         default:0,
     },
     date:{

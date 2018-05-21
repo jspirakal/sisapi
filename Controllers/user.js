@@ -6,6 +6,7 @@ const    Hash=require('../libraries/crypto');
 const    EMail = require('../hooks/email');
 const    Validator = require('../libraries/validation');
 const    Secret = require('../config/secrets');
+const   Admin = require('../Models/admin');
 // const { validationResult } = require('express-validator/check');
 const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
@@ -18,27 +19,42 @@ module.exports={
     login:function(req,res){    
         let p =req.body;
         console.log(p);
-        req.body.password=Hash.hash(req.body.password);
+        // req.body.password=Hash.hash(req.body.password);
         User.findOne(req.body, (err,data) => {
             if(err)
             {
                 res.status(500).json("try agin");
             }
             else if(data){
-                if(data.tag=='admin')
-                {
-                    res.cookie('username',data.username);                                    
-                    res.json({"user":"admin","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
-                }
-                else {
-                    res.json({"user":"student","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
-                }
-                    
+                res.json({"user":"student","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
             }
             else {
-                res.status(500).json('incorrect username or password!');
+                 
+                Admin.findOne(req.body, (err,data) => {
+                    if(err)
+                    {
+                        res.status(500).json("try agin");
+                    }
+                    else if(data){
+                        if(data.type=='admin')
+                        {
+                            res.json({"user":"admin","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
+                        }
+                        else if(data.type=='controller') {
+                            res.json({"user":"controller","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
+                        } else {
+                            res.json({"user":"hod","rollno":data.rollno,'token':jwt.sign({p},Secret.jwtSecret)});
+                            
+                        }
+                            
+                    }
+                    else {
+                         
+                        res.status(500).json('incorrect username or password!');
+                    }
+                });
             }
-             });
+        });
         // }
     // }
     },
@@ -104,7 +120,7 @@ module.exports={
         });
     },
     register:function(req,res){
-        req.body.password=Hash.hash(req.body.password);
+        // req.body.password=Hash.hash(req.body.password);
         let user=new User(req.body);
         user.save(function(err,data){
             if(err)
@@ -145,7 +161,7 @@ module.exports={
             });
     },
     getAllUser:function(req,res){
-        User.find({},function(err,data){
+        User.find({ tag: { $ne: 'admin' } },function(err,data){
             if(err)
             {
                 res.status(500).json(data);
