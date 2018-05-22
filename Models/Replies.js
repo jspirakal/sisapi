@@ -1,21 +1,11 @@
 var mongoose=require('mongoose');
 var ReplieSchema=mongoose.Schema({
-   title:{
-       type:String,
-       required:true,
-   },
-   appid:{
-     type:String,
-        required:true,
-   },
-    body:{
-        type:String,
+   
+    appid:{
+    type:String,
         required:true,
     },
-    status:{
-        type:Number,
-        default:0,
-    },
+  
     admin:{
         type:String,
         default:null,

@@ -31,9 +31,19 @@ router.get('/getalltt',TimeTable.getTimeTable);
 
 router.post('/sendapplication',Application.sendApplication);
 router.get('/getapplications/:id',Application.getApplications);
-router.post('/replyapplication',Application.replyApplication);
+router.post('/replyapplicationbyadmin/:appid',Application.replyApplicationByAdmin);
+router.post('/replyapplicationbycontroller/:appid',Application.replyApplicationByController);
+router.post('/replyapplicationbyhod/:appid',Application.replyApplicationByHod);
 router.get('/getallapplications',Application.getAllApplications);
-router.get('/getreply/:id',Application.getReply);
+router.get('/getallapplicationsbycontroller',Application.getAllApplicationsByController);
+router.get('/getallapplicationsbyhod',Application.getAllApplicationsByHod);
+
+router.get('/getapplicationbyrollno/:user/:rn',Application.getApplicationByRollNo);
+
+router.get('/getadminreply/:id',Application.getReply);
+router.get('/getcontrollerreply/:id',Application.getReply);
+router.get('/gethodreply/:id',Application.getReply);
+router.get('/getfinalreply/:id',Application.getReply);
 
 router.get('/getuser/:id',User.getUser);
 router.get('/getalluser',User.getAllUser);

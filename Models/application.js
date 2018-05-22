@@ -24,6 +24,10 @@ var ApplicationSchema=mongoose.Schema({
         type:String,
         required:true,
     },
+    name:{
+        type:String,
+        required: true
+    },
     type:{
         type:String,
         required:true,
@@ -34,15 +38,15 @@ var ApplicationSchema=mongoose.Schema({
     },
     admin:{
         type:Boolean,
-        default:0,
+        default:false,
     },
     controller:{
         type:Boolean,
-        default:0,
+        default:false,
     },
     hod:{
         type:Boolean,
-        default:0,
+        default:false,
     },
     date:{
        type: Date,
