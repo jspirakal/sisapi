@@ -37,16 +37,16 @@ var ApplicationSchema=mongoose.Schema({
         default:0,
     },
     admin:{
-        type:Boolean,
-        default:false,
+        type:String,
+        default:null,
     },
     controller:{
-        type:Boolean,
-        default:false,
+        type:String,
+        default:null,
     },
     hod:{
-        type:Boolean,
-        default:false,
+        type:String,
+        default:null,
     },
     date:{
        type: Date,

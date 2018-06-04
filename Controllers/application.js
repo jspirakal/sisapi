@@ -70,7 +70,7 @@ module.exports={
     
     },
     getAllApplicationsByController:function(req,res){
-        Application.find({admin:true},(err,data)=>{
+        Application.find({admin:'approve'},(err,data)=>{
            if(err){
                 res.status(500).json('error');
             } else {
@@ -80,7 +80,7 @@ module.exports={
         });
     },
     getAllApplicationsByHod:function(req,res){
-        Application.find({controller:true},(err,data)=>{
+        Application.find({controller:'approve'},(err,data)=>{
            if(err){
                 res.status(500).json('error');
             } else {
@@ -95,7 +95,7 @@ module.exports={
                 res.sendStatus(500);
             } else {
                 console.log(req.body);
-                Application.update({'_id':req.params.appid},{'admin':true},function(err,info){
+                Application.update({'_id':req.params.appid},{'admin':req.body.replyType},function(err,info){
                     if(err){
                         res.sendStatus(500);
                     } else {
@@ -106,7 +106,7 @@ module.exports={
         });
     },
     replyApplicationByController:function(req,res){
-        Application.findByIdAndUpdate(req.params.appid,{controller:true})
+        Application.findByIdAndUpdate(req.params.appid,{controller:req.body.replyType})
         .then(ret=>{
             Replies.findOneAndUpdate({appid:req.params.appid},{controller:req.body.body})
             .then(ret=>{
@@ -124,7 +124,8 @@ module.exports={
         }) 
     },
     replyApplicationByHod:function(req,res){
-        Application.findByIdAndUpdate(req.params.appid,{hod:true})
+        console.log(req.body);
+        Application.findByIdAndUpdate(req.params.appid,{hod:req.body.replyType})
         .then(ret=>{
             Replies.findOneAndUpdate({appid:req.params.appid},{hod:req.body.body})
             .then(ret=>{
